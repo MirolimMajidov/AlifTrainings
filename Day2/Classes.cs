@@ -6,6 +6,7 @@ namespace Classes
 
         public User()
         {
+            
         }
 
         public User(string firstName)
