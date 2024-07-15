@@ -98,7 +98,7 @@ class Program
             Console.WriteLine(user);
         }
 
-        var item1 = filteredUsers.(u=>u.Age);
+        var item1 = filteredUsers.FirstOrDefault(u=>u.Age == 23);
 
     }
 }
