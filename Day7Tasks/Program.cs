@@ -29,11 +29,14 @@ class Program
         // Task[] tasks = [task1, task2, task3];
         // Task.WaitAll(tasks);
 
-        using var timeoutCancellationTokenSource = new CancellationTokenSource();
-        timeoutCancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(2));
-        var cancellationToken = timeoutCancellationTokenSource.Token;
-        var task1 = Task.Run(() => MyLoop(cancellationToken));
-        task1.Wait();
+        // using var timeoutCancellationTokenSource = new CancellationTokenSource();
+        // timeoutCancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(2));
+        // var cancellationToken = timeoutCancellationTokenSource.Token;
+        // var task1 = Task.Run(() => MyLoop(cancellationToken));
+        // task1.Wait();
+        
+        
+        
         watch.Stop();
 
         Console.WriteLine($"Finished! spent time: {watch.ToString()}");
