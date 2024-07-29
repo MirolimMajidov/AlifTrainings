@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserService.Infrastructure;
@@ -11,9 +12,11 @@ using UserService.Infrastructure;
 namespace UserService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20240729071127_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,16 +50,14 @@ namespace UserService.Infrastructure.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)")
                         .HasColumnName("Name");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
@@ -67,14 +68,14 @@ namespace UserService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("adfca954-c605-4535-a743-a905ad466d0c"),
+                            Id = new Guid("4af909e8-41bc-4e79-8592-164bee1c054b"),
                             Age = 23,
                             FirstName = "Ali",
                             LastName = "Valiev"
                         },
                         new
                         {
-                            Id = new Guid("91802531-f584-4ef8-b540-4a8aa53b297d"),
+                            Id = new Guid("bbb1c51f-5db5-48cc-b8fb-be6b847ecce9"),
                             Age = 87,
                             FirstName = "James",
                             LastName = "Esh"

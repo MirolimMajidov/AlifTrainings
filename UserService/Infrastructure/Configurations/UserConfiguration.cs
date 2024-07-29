@@ -14,6 +14,7 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         
         builder.Property(p => p.FirstName).HasMaxLength(20).HasColumnName("Name");
         builder.Property(p => p.LastName).HasMaxLength(20);
+        builder.Property(p => p.Email).HasMaxLength(50);
         builder.Property(p => p.Age);
         
         var users = new List<User>()

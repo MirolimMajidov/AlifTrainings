@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserService.Infrastructure;
@@ -11,9 +12,11 @@ using UserService.Infrastructure;
 namespace UserService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20240729071307_EmailAdded")]
+    partial class EmailAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,8 +51,7 @@ namespace UserService.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(20)
@@ -67,14 +69,14 @@ namespace UserService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("adfca954-c605-4535-a743-a905ad466d0c"),
+                            Id = new Guid("78491c20-b2df-498c-b798-d9ad1ce52b3f"),
                             Age = 23,
                             FirstName = "Ali",
                             LastName = "Valiev"
                         },
                         new
                         {
-                            Id = new Guid("91802531-f584-4ef8-b540-4a8aa53b297d"),
+                            Id = new Guid("f84dab40-86ed-480d-a7ee-5e8529270447"),
                             Age = 87,
                             FirstName = "James",
                             LastName = "Esh"
