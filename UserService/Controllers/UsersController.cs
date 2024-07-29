@@ -1,6 +1,9 @@
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.Internal;
 using UserService.DTOs;
+using UserService.Infrastructure;
 using UserService.Models;
 
 namespace UserService.Controllers;
@@ -10,47 +13,32 @@ namespace UserService.Controllers;
 //[Route("api/[controller]/[action]")]
 public class UsersController : ControllerBase
 {
-    private static ConcurrentDictionary<Guid, User> Users;
+    private UserContext _context;
 
-    public UsersController()
+    public UsersController(UserContext context)
     {
-        Users ??= CreateUsers(2);
-    }
-
-    ConcurrentDictionary<Guid, User> CreateUsers(int usersCount)
-    {
-        var users = new ConcurrentDictionary<Guid, User>();
-        for (int i = 1; i <= usersCount; i++)
-        {
-            var id = Guid.NewGuid();
-            users.TryAdd(id, new User
-            {
-                Id = id,
-                FirstName = "FirstName" + i,
-                LastName = "LastName" + i
-            });
-        }
-
-        return users;
+        _context = context;
     }
 
     [HttpGet]
     public IEnumerable<User> GetUsers()
     {
-        return Users.Values;
+        return _context.Users.ToList();
     }
-    
-    [HttpGet("{id:guid}")]
-    public User GetById(Guid id)
-    {
-        if(Users.TryGetValue(id, out User user))
-            return user;
 
-        return default;
+    [HttpGet("{id:guid}")]
+    public IActionResult GetById(Guid id)
+    {
+        var users = _context.Users.Where(u => true).AsQueryable();
+        var user = users.SingleOrDefault(u => u.Id == id);
+        if (user is null)
+            return NotFound();
+
+        return Ok(user);
     }
 
     [HttpPost]
-    public IActionResult Create(CreateUserDTO user)
+    public async Task<IActionResult> Create(CreateUserDTO user)
     {
         var _user = new User
         {
@@ -59,37 +47,39 @@ public class UsersController : ControllerBase
             LastName = user.LastName,
             Age = user.Age
         };
-        Users.TryAdd(_user.Id, _user);
-        
+        _context.Users.Add(_user);
+
+        await _context.SaveChangesAsync();
+
         return Ok(_user);
     }
 
     [HttpPut("{id:guid}")]
     public IActionResult Update(Guid id, UpdateUserDTO user)
     {
-        if (Users.TryGetValue(id, out User _user))
-        {
-            _user.FirstName = user.FirstName;
-            _user.LastName = user.LastName;
-            _user.Age = user.Age;
+        var _user = _context.Users.SingleOrDefault(u => u.Id == id);
+        if (_user is null)
+            return NotFound();
 
-            return Ok();
-        }
-        else
-        {
-           return NotFound();
-        }
+        _user.FirstName = user.FirstName;
+        _user.LastName = user.LastName;
+        _user.Age = user.Age;
+        _context.Users.Update(_user);
+        _context.SaveChanges();
+
+        return Ok();
     }
 
     [HttpDelete("{id:guid}")]
     public IActionResult Delete(Guid id)
     {
-        if (Users.ContainsKey(id))
-        {
-            Users.TryRemove(id, out User value);
-            return Ok();
-        }
-        else
-           return NotFound();
+        var user = _context.Users.SingleOrDefault(u => u.Id == id);
+        if (user is null)
+            return NotFound();
+
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+
+        return Ok();
     }
 }
