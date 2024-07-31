@@ -8,7 +8,7 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("MyUsers");
+        builder.ToTable("Users");
 
         builder.HasKey(p => p.Id);
         
@@ -16,6 +16,12 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         builder.Property(p => p.LastName).HasMaxLength(20);
         builder.Property(p => p.Email).HasMaxLength(50);
         builder.Property(p => p.Age);
+        
+        // builder.HasMany(p => p.UserRoles)
+        //     .WithOne(u => u.User)
+        //     .HasForeignKey(r => r.UserId)
+        //     .OnDelete(DeleteBehavior.Cascade);
+
         
         var users = new List<User>()
         {

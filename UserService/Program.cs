@@ -1,14 +1,24 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
+using Serilog;
 using UserService.Infrastructure;
 using UserService.Middlewares;
 using UserService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var log = new LoggerConfiguration()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+log.Information("Test log");
+
+Log.Logger = log;
 
 var connectionString = builder.Configuration.GetSection("ConnectionString").Value;
 builder.Services.AddDbContext<UserContext>(ob =>
 {
     ob.UseNpgsql(connectionString)
+        //.UseLazyLoadingProxies()
+        .LogTo(Console.WriteLine)
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 builder.Services.AddControllers();
@@ -21,7 +31,30 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetService<UserContext>();
     context.Database.Migrate();
+    
+    var roles = context.Roles.ToList();
+    if (!roles.Any())
+    {
+        var user = context.Users.First();
+        var role1 = new Role()
+        {
+            Name = "Admin"
+        };
+        var role2 = new Role()
+        {
+            Name = "Dev"
+        };
 
+        var userRoles = new List<UserRole>()
+        {
+            new UserRole(){ UserId = user.Id, RoleId = role1.Id},
+            new UserRole(){ UserId = user.Id, RoleId = role2.Id},
+        };
+        context.AddRange(role1, role2);
+        context.AddRange(userRoles);
+
+        context.SaveChanges();
+    }
     //context.Database.EnsureDeleted();
     //context.Database.EnsureCreated();
 

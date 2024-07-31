@@ -11,19 +11,38 @@ namespace UserService.Controllers;
 [ApiController]
 [Route("[controller]")]
 //[Route("api/[controller]/[action]")]
-public class UsersController : ControllerBase
+public class UserController : ControllerBase
 {
     private UserContext _context;
+    private readonly ILogger<UserController> _logger;
 
-    public UsersController(UserContext context)
+    public UserController(UserContext context, ILogger<UserController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet]
     public IEnumerable<User> GetUsers()
     {
-        return _context.Users.ToList();
+        _logger.LogInformation("Started my API");
+        //var users1 = _context.Users.Include(u=>u.UserRoles).ThenInclude(ur=>ur.Role).ToList();
+        // var roles = _context.Users
+        //     .Include(u=>u.UserRoles)
+        //     .ThenInclude(ur=>ur.Role)
+        //     .SelectMany(u=>u.UserRoles)
+        //     .Select(ur=>ur.Role).Distinct();
+        // var sqlQuery = roles.ToQueryString();
+        
+        var users = _context.Users.ToList();
+        var user = users.First(u=>u.Id== Guid.Parse("1a4374e4-2da7-4617-ac6d-a58f40877b1b"));
+        var userRoles = user.UserRoles;
+        var role = userRoles.First().Role;
+        _logger.LogInformation("Finished my API. User id is {id}", user.Id);
+
+        //var text = string.Format("Hi, my name is {name}, and age is {age}", "Mirolim", "29");
+        
+        return users;
     }
 
     [HttpGet("{id:guid}")]
