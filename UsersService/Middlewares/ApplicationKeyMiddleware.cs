@@ -1,7 +1,7 @@
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Extensions.Primitives;
 
-namespace UserService.Middlewares;
+namespace UsersService.Middlewares;
 
 public class ApplicationKeyMiddleware 
 {

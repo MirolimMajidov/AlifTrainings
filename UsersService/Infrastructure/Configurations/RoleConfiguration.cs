@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UserService.Models;
+using UsersService.Models;
 
-namespace UserService.Infrastructure.Configurations;
+namespace UsersService.Infrastructure.Configurations;
 
 public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {

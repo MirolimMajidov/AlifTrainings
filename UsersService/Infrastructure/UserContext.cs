@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using UserService.Infrastructure.Configurations;
-using UserService.Models;
+using UsersService.Infrastructure.Configurations;
+using UsersService.Models;
 
-namespace UserService.Infrastructure;
+namespace UsersService.Infrastructure;
 
 public class UserContext : DbContext
 {

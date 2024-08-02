@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace UserService.Middlewares;
+namespace UsersService.Middlewares;
 
 public class GlobalExceptionMiddleware
 {

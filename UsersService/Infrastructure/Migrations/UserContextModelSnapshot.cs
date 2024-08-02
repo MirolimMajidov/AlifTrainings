@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UserService.Infrastructure;
+using UsersService.Infrastructure;
 
 #nullable disable
 
-namespace UserService.Infrastructure.Migrations
+namespace UsersService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserContext))]
     partial class UserContextModelSnapshot : ModelSnapshot
@@ -25,7 +25,7 @@ namespace UserService.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("UserService.Models.Role", b =>
+            modelBuilder.Entity("UsersService.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace UserService.Infrastructure.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("UserService.Models.User", b =>
+            modelBuilder.Entity("UsersService.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
