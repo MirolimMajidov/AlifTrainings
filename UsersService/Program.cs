@@ -1,16 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
 using UsersService.Infrastructure;
 using UsersService.Middlewares;
 using UsersService.Models;
+using ILogger = Serilog.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
-var log = new LoggerConfiguration()
-    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-log.Information("Test log");
 
-Log.Logger = log;
+ILogger logger= new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console(LogEventLevel.Warning)
+    .WriteTo.File("log.txt",
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .CreateLogger();
+
+builder.Host.UseSerilog(logger);
 
 var connectionString = builder.Configuration.GetSection("ConnectionString").Value;
 builder.Services.AddDbContext<UserContext>(ob =>
