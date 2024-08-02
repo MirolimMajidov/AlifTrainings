@@ -18,9 +18,6 @@ namespace UsersService.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.7")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -70,21 +67,21 @@ namespace UsersService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1a4374e4-2da7-4617-ac6d-a58f40877b1b"),
+                            Id = new Guid("9ab962bc-8304-4173-a0cc-c04cd82a8cc3"),
                             Age = 23,
                             FirstName = "Ali",
                             LastName = "Valiev"
                         },
                         new
                         {
-                            Id = new Guid("b3fda2d1-2624-4ac0-bbd0-159ba2c4417a"),
+                            Id = new Guid("6d2cadf9-959f-4fcf-8fce-5d17a8e1bb39"),
                             Age = 87,
                             FirstName = "James",
                             LastName = "Esh"
                         });
                 });
 
-            modelBuilder.Entity("UserService.Models.UserRole", b =>
+            modelBuilder.Entity("UsersService.Models.UserRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,15 +103,15 @@ namespace UsersService.Infrastructure.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("UserService.Models.UserRole", b =>
+            modelBuilder.Entity("UsersService.Models.UserRole", b =>
                 {
-                    b.HasOne("UserService.Models.Role", "Role")
+                    b.HasOne("UsersService.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserService.Models.User", "User")
+                    b.HasOne("UsersService.Models.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -125,7 +122,7 @@ namespace UsersService.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserService.Models.User", b =>
+            modelBuilder.Entity("UsersService.Models.User", b =>
                 {
                     b.Navigation("UserRoles");
                 });

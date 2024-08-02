@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Proxies;
 using Serilog;
-using UserService.Infrastructure;
-using UserService.Middlewares;
-using UserService.Models;
+using UsersService.Infrastructure;
+using UsersService.Middlewares;
+using UsersService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var log = new LoggerConfiguration()

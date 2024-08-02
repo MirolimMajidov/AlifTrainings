@@ -1,45 +1,40 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace UserService.Models;
+namespace UsersService.Models;
 
-public class User
+public class User : BaseEntity
 {
     private ILazyLoader _lazyLoader;
 
-    public User()
+    public User() : base()
     {
-        Id = Guid.NewGuid();
     }
-    
+
     public User(ILazyLoader lazyLoader)
     {
         Id = Guid.NewGuid();
         _lazyLoader = lazyLoader;
     }
 
-    public Guid Id { get; set; }
-
     public string FirstName { get; set; }
-    
+
     public string LastName { get; set; }
-    
+
     public string Email { get; set; }
-    
+
     public int Age { get; set; }
 
     private List<UserRole> _userRoles = null;
+
     public virtual List<UserRole> UserRoles
     {
         get
         {
-            if(_userRoles is null)
+            if (_userRoles is null)
                 _lazyLoader.Load(this, nameof(UserRoles));
 
             return _userRoles;
         }
-        set
-        {
-            _userRoles = value;
-        }
+        set { _userRoles = value; }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace UserService.Infrastructure.Migrations
+namespace UsersService.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -70,8 +70,8 @@ namespace UserService.Infrastructure.Migrations
                 columns: new[] { "Id", "Age", "Email", "Name", "LastName" },
                 values: new object[,]
                 {
-                    { new Guid("1a4374e4-2da7-4617-ac6d-a58f40877b1b"), 23, null, "Ali", "Valiev" },
-                    { new Guid("b3fda2d1-2624-4ac0-bbd0-159ba2c4417a"), 87, null, "James", "Esh" }
+                    { new Guid("6d2cadf9-959f-4fcf-8fce-5d17a8e1bb39"), 87, null, "James", "Esh" },
+                    { new Guid("9ab962bc-8304-4173-a0cc-c04cd82a8cc3"), 23, null, "Ali", "Valiev" }
                 });
 
             migrationBuilder.CreateIndex(
