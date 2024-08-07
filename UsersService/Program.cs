@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
 using Users.API.Services;
@@ -29,7 +30,11 @@ builder.Host.UseSerilog(logger);
 var authOptions = builder.Configuration.GetSection(nameof(AuthOptions)).Get<AuthOptions>() ?? new();
 
 builder.Services.AddSingleton(authOptions);
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("myAdmins",
+        policy => policy.RequireClaim("Admin", "Dev", "Editor"));
+});
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -64,7 +69,27 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{     
+    // Add the JWT Bearer authentication scheme
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme.",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+    };
+    options.AddSecurityDefinition("Bearer", securityScheme);
+
+    // Use the JWT Bearer authentication scheme globally
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { securityScheme, new List<string>() }
+    });
+});
 builder.Services.AddScoped(typeof(ICRUDRepository<>), typeof(CRUDRepository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

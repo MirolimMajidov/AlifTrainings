@@ -1,9 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UsersService.DTOs;
 using UsersService.Infrastructure.Configs;
 using UsersService.Models;
+using UsersService.Repositories;
 using UsersService.Services;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
@@ -13,11 +15,13 @@ public class AuthService : IAuthService
 {
     private readonly IUserService _userService;
     private readonly AuthOptions _authOptions;
+    private readonly ICRUDRepository<RefreshToken> _refreshtokenRepository;
 
-    public AuthService(IUserService userService, AuthOptions authOptions)
+    public AuthService(IUserService userService, ICRUDRepository<RefreshToken> refreshtokenRepository, AuthOptions authOptions)
     {
         _userService = userService;
         _authOptions = authOptions;
+        _refreshtokenRepository = refreshtokenRepository;
     }
 
     public async Task<(TokenInfoDto tokenInfoDto, string errorMessage)> GenerateTokenAsync(LoginDto loginDto,
@@ -35,16 +39,15 @@ public class AuthService : IAuthService
         RefreshTokenDto refreshTokenDto,
         CancellationToken cancellationToken = default)
     {
-        // var context = _userService.GetRepository().GetContext();
-        // var refreshToken = context.GetEntities<RefreshToken>().Include(rt => rt.User)
-        //     .SingleOrDefault(u => u.Token == refreshTokenDto.RefreshToken);
-        // if (refreshToken?.User is null)
-        //     return (null, "No active token");
-        //
-        // context.Remove(refreshToken);
-        //
-        // return await GenerateJwtAsync(refreshToken.User, cancellationToken);
-        return default;
+        var refreshToken = _refreshtokenRepository.GetEntities().AsQueryable().Include(rt => rt.User)
+            .SingleOrDefault(u => u.Token == refreshTokenDto.RefreshToken);
+        if (refreshToken?.User is null)
+            return (null, "No active token");
+     
+        _refreshtokenRepository.Delete(refreshToken);
+      
+        return await GenerateJwtAsync(refreshToken.User, cancellationToken);
+
     }
 
     private async Task<(TokenInfoDto tokenInfoDto, string errorMessage)> GenerateJwtAsync(User user,
