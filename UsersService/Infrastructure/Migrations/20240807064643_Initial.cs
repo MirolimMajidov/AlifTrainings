@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace UsersService.Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -32,12 +30,34 @@ namespace UsersService.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     LastName = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Age = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExpireAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,14 +85,10 @@ namespace UsersService.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Age", "Email", "Name", "LastName" },
-                values: new object[,]
-                {
-                    { new Guid("6d2cadf9-959f-4fcf-8fce-5d17a8e1bb39"), 87, null, "James", "Esh" },
-                    { new Guid("9ab962bc-8304-4173-a0cc-c04cd82a8cc3"), 23, null, "Ali", "Valiev" }
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -84,11 +100,20 @@ namespace UsersService.Infrastructure.Migrations
                 table: "UserRoles",
                 columns: new[] { "UserId", "RoleId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
             migrationBuilder.DropTable(
                 name: "UserRoles");
 

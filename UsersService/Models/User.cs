@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace UsersService.Models;
@@ -20,6 +21,11 @@ public class User : BaseEntity
 
     public string LastName { get; set; }
 
+    public string UserName { get; set; }
+
+    [JsonIgnore]
+    public string Password { get; set; }
+
     public string Email { get; set; }
 
     public int Age { get; set; }
@@ -37,4 +43,6 @@ public class User : BaseEntity
         }
         set { _userRoles = value; }
     }
+
+    public List<RefreshToken> RefreshTokens { get; set; } = new();
 }

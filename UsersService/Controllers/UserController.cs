@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UsersService.DTOs;
 using UsersService.Models;
@@ -8,6 +9,7 @@ namespace UsersService.Controllers;
 [ApiController]
 [Route("[controller]")]
 //[Route("api/[controller]/[action]")]
+[Authorize]
 public class UserController : ControllerBase
 {
     private IUserService _service;
@@ -21,12 +23,13 @@ public class UserController : ControllerBase
         _provider = provider;
     }
     
-    [HttpGet("GetId")]
+    [HttpGet("IdProvider")]
     public Guid[] GetId([FromServices]IdProvider provider2, [FromServices]IdProvider provider3)
     {
         return [_provider.Id, provider2.Id, provider3.Id];
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public IEnumerable<User> GetUsers()
     {

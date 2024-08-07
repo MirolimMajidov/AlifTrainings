@@ -12,7 +12,7 @@ using UsersService.Infrastructure;
 namespace UsersService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20240802074453_Initial")]
+    [Migration("20240807064643_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,6 +24,28 @@ namespace UsersService.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("UsersService.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ExpireAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
 
             modelBuilder.Entity("UsersService.Models.Role", b =>
                 {
@@ -63,25 +85,19 @@ namespace UsersService.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9ab962bc-8304-4173-a0cc-c04cd82a8cc3"),
-                            Age = 23,
-                            FirstName = "Ali",
-                            LastName = "Valiev"
-                        },
-                        new
-                        {
-                            Id = new Guid("6d2cadf9-959f-4fcf-8fce-5d17a8e1bb39"),
-                            Age = 87,
-                            FirstName = "James",
-                            LastName = "Esh"
-                        });
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("UsersService.Models.UserRole", b =>
@@ -106,6 +122,17 @@ namespace UsersService.Infrastructure.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("UsersService.Models.RefreshToken", b =>
+                {
+                    b.HasOne("UsersService.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UsersService.Models.UserRole", b =>
                 {
                     b.HasOne("UsersService.Models.Role", "Role")
@@ -127,6 +154,8 @@ namespace UsersService.Infrastructure.Migrations
 
             modelBuilder.Entity("UsersService.Models.User", b =>
                 {
+                    b.Navigation("RefreshTokens");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

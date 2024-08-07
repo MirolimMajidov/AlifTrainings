@@ -17,17 +17,14 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         builder.Property(p => p.Email).HasMaxLength(50);
         builder.Property(p => p.Age);
         
+        builder.Property(p => p.UserName).IsRequired();
+        builder.HasIndex(p => p.UserName)
+            .IsUnique();
+        
         // builder.HasMany(p => p.UserRoles)
         //     .WithOne(u => u.User)
         //     .HasForeignKey(r => r.UserId)
         //     .OnDelete(DeleteBehavior.Cascade);
 
-        
-        var users = new List<User>()
-        {
-            new User() { FirstName = "Ali", LastName = "Valiev", Age = 23},
-            new User() { FirstName = "James", LastName = "Esh", Age = 87},
-        };
-        builder.HasData(users);
     }
 }
