@@ -10,6 +10,8 @@ public class UserContext : DbContext
     
     public DbSet<Role> Roles { get; set; }
     
+    public DbSet<Ability> Abilities { get; set; }
+    
     public DbSet<UserRole> UserRoles { get; set; }
     
     public DbSet<RefreshToken> RefreshTokens { get; set; }
