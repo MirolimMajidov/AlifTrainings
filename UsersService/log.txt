@@ -3089,3 +3089,100 @@ LIMIT 1
 2024-08-09 11:34:44.448 +05:00 [INF] Executed endpoint 'UsersService.Controllers.AbilityController.Delete (UsersService)'
 2024-08-09 11:34:44.448 +05:00 [INF] Request finished HTTP/1.1 DELETE http://localhost:5194/Ability?Id=f8cecfa0-4f72-4ad1-a5d3-febc1b1bbbad - 400 null text/plain; charset=utf-8 4.0876ms
 2024-08-09 11:34:49.157 +05:00 [INF] Application is shutting down...
+2024-08-13 15:19:31.975 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:19:31.993 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2024-08-13 15:19:32.009 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:19:32.018 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:19:32.019 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2024-08-13 15:19:32.026 +05:00 [INF] No migrations were applied. The database is already up to date.
+2024-08-13 15:19:32.139 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u)
+2024-08-13 15:19:32.198 +05:00 [INF] User profile is available. Using '/Users/mirolimmajidov/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2024-08-13 15:19:32.240 +05:00 [INF] Now listening on: http://localhost:5194
+2024-08-13 15:19:32.240 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-13 15:19:32.241 +05:00 [INF] Hosting environment: Development
+2024-08-13 15:19:32.241 +05:00 [INF] Content root path: /Users/mirolimmajidov/Repos/AlifTrainings/UsersService
+2024-08-13 15:19:32.488 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/index.html - null null
+2024-08-13 15:19:32.654 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/index.html - 200 null text/html;charset=utf-8 170.991ms
+2024-08-13 15:19:32.733 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui.css - null null
+2024-08-13 15:19:32.733 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui-bundle.js - null null
+2024-08-13 15:19:32.734 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui-standalone-preset.js - null null
+2024-08-13 15:19:32.761 +05:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-08-13 15:19:32.765 +05:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-08-13 15:19:32.765 +05:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-08-13 15:19:32.767 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui-bundle.js - 200 1096145 text/javascript 33.87ms
+2024-08-13 15:19:32.768 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui.css - 200 143943 text/css 35.722ms
+2024-08-13 15:19:32.769 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/swagger-ui-standalone-preset.js - 200 339486 text/javascript 35.0729ms
+2024-08-13 15:19:32.870 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - null null
+2024-08-13 15:19:32.945 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 74.8157ms
+2024-08-13 15:19:36.581 +05:00 [INF] Application is shutting down...
+2024-08-13 15:21:36.521 +05:00 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:21:36.537 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2024-08-13 15:21:36.551 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:21:36.559 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2024-08-13 15:21:36.560 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2024-08-13 15:21:36.566 +05:00 [INF] No migrations were applied. The database is already up to date.
+2024-08-13 15:21:36.706 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u)
+2024-08-13 15:21:36.769 +05:00 [INF] User profile is available. Using '/Users/mirolimmajidov/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2024-08-13 15:21:36.801 +05:00 [INF] Now listening on: http://localhost:5194
+2024-08-13 15:21:36.802 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-08-13 15:21:36.802 +05:00 [INF] Hosting environment: Development
+2024-08-13 15:21:36.802 +05:00 [INF] Content root path: /Users/mirolimmajidov/Repos/AlifTrainings/UsersService
+2024-08-13 15:21:37.302 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/index.html - null null
+2024-08-13 15:21:37.428 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/index.html - 200 null text/html;charset=utf-8 127.8032ms
+2024-08-13 15:21:37.654 +05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - null null
+2024-08-13 15:21:37.755 +05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 100.547ms
+2024-08-13 15:21:42.817 +05:00 [INF] Application is shutting down...

@@ -65,6 +65,7 @@ class Program
 
     static void UpdateAge(User user)
     {
+        user.DoWork();
         user.Age += 5;
     }
 }
@@ -73,6 +74,11 @@ class User : IDisposable
 {
     public event EventHandler Test ;
     public int Age { get; set; }
+
+    public void DoWork()
+    {
+        
+    }
 
     public void Dispose()
     {
