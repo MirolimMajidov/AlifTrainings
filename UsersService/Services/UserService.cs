@@ -45,6 +45,9 @@ public class UserService : IUserService
 
     public User Add(User entity)
     {
+        if (string.IsNullOrEmpty(entity.FirstName))
+            throw new ArgumentException("FirstName cannot be empty");
+        
         return _repository.Add(entity);
     }
 

@@ -16,7 +16,7 @@ public class AbilityController : ControllerBase
     private readonly IMediator _mediator;
     private ICRUDRepository<Ability> _service;
     private ILogger<AbilityController> _logger;
-    private readonly IdProvider _provider;
+    //private readonly IdProvider _provider;
 
     public AbilityController(IMediator mediator, ICRUDRepository<Ability> service, ILogger<AbilityController> logger)
     {

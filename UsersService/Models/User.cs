@@ -37,7 +37,12 @@ public class User : BaseEntity
         get
         {
             if (_userRoles is null)
-                _lazyLoader.Load(this, nameof(UserRoles));
+            {
+                if (_lazyLoader is null)
+                    return [];
+                
+                _lazyLoader?.Load(this, nameof(UserRoles));
+            }
 
             return _userRoles;
         }

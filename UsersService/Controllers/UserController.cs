@@ -9,7 +9,7 @@ namespace UsersService.Controllers;
 [ApiController]
 [Route("[controller]")]
 //[Route("api/[controller]/[action]")]
-[Authorize]
+// [Authorize]
 public class UserController : ControllerBase
 {
     private IUserService _service;
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin, Dev")]
+    // [Authorize(Roles = "Admin, Dev")]
     public async Task<IActionResult> Create(CreateUserDTO user, CancellationToken cancellationToken)
     {
         var _user = new User
@@ -66,7 +66,7 @@ public class UserController : ControllerBase
         return Ok(_user);
     }
 
-    [Authorize(Policy = "myAdmins")]
+    // [Authorize(Policy = "myAdmins")]
     //[Authorize(Roles = "Admin, Dev")]
     [HttpPut("{id:guid}")]
     public IActionResult Update(Guid id, UpdateUserDTO user)
@@ -84,7 +84,7 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    [Authorize(Policy = "myAdmins")]
+    // [Authorize(Policy = "myAdmins")]
     [HttpDelete("{id:guid}")]
     public IActionResult Delete(Guid id)
     {
